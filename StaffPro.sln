@@ -1,8 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD98FFED-5D51-4FE6-9D74-7B358055EAA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C269C989-ED8A-4600-87B1-BB0CE0A190B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Personnel", "Personnel", "{4964A58D-07A8-4BFC-B19C-C2352712120C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{7BAE2E07-E4C5-4749-9BA4-DE66BDE71BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personnel.Domain", "Personnel.Domain\Personnel.Domain.csproj", "{8D1C4301-CB28-4F80-9A28-192B7D9EE33F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C269C989-ED8A-4600-87B1-BB0CE0A190B2} = {FD98FFED-5D51-4FE6-9D74-7B358055EAA6}
+		{4964A58D-07A8-4BFC-B19C-C2352712120C} = {C269C989-ED8A-4600-87B1-BB0CE0A190B2}
+		{7BAE2E07-E4C5-4749-9BA4-DE66BDE71BAD} = {4964A58D-07A8-4BFC-B19C-C2352712120C}
+		{8D1C4301-CB28-4F80-9A28-192B7D9EE33F} = {7BAE2E07-E4C5-4749-9BA4-DE66BDE71BAD}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D1C4301-CB28-4F80-9A28-192B7D9EE33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D1C4301-CB28-4F80-9A28-192B7D9EE33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D1C4301-CB28-4F80-9A28-192B7D9EE33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D1C4301-CB28-4F80-9A28-192B7D9EE33F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

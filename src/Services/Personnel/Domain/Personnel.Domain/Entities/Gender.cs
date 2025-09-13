@@ -1,7 +1,23 @@
-namespace Personnel.Domain.Entities;
-
-public enum Gender
+namespace Personnel.Domain.Entities
 {
-    Male = 0,
-    Female = 1
+    /// <summary>
+    /// Пол пользователя.
+    /// </summary>
+    public enum Gender
+    {
+        /// <summary>
+        /// Мужской.
+        /// </summary>
+        Male = 0,
+
+        /// <summary>
+        /// Женский.
+        /// </summary>
+        Female = 1,
+
+        /// <summary>
+        /// Специальное значение (например, тестовое или нестандартное).
+        /// </summary>
+        Brat = 777
+    }
 }

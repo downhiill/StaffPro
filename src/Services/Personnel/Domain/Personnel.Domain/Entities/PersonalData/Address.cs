@@ -1,3 +1,5 @@
+using Ardalis.GuardClauses;
+
 namespace Personnel.Domain.Entities.PersonalData
 {
     /// <summary>
@@ -8,12 +10,12 @@ namespace Personnel.Domain.Entities.PersonalData
         /// <summary>
         /// Страна.
         /// </summary>
-        public string? Country { get; private set; }
+        public string Country { get; private set; }
 
         /// <summary>
         /// Город.
         /// </summary>
-        public string? City { get; private set; }
+        public string City { get; private set; }
 
         /// <summary>
         /// Создаёт новый экземпляр <see cref="Address"/>.
@@ -25,6 +27,9 @@ namespace Personnel.Domain.Entities.PersonalData
         /// </exception>
         public Address(string country, string city)
         {
+            Guard.Against.Null(country, nameof(country));
+            Guard.Against.Null(city, nameof(city));
+            
             Country = Validation(country, nameof(country));
             City = Validation(city, nameof(city));
         }

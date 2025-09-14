@@ -1,3 +1,5 @@
+using Ardalis.GuardClauses;
+
 namespace Personnel.Domain.Entities.PersonalData
 {
     /// <summary>
@@ -55,6 +57,10 @@ namespace Personnel.Domain.Entities.PersonalData
         /// </exception>
         public WorkExperience(string position, string organization, Address address, string description, DateTime startDate, DateTime endDate)
         {
+            Guard.Against.Null(position, nameof(position));
+            Guard.Against.Null(organization, nameof(organization));
+            Guard.Against.Null(address, nameof(address));
+            
             Position = Validation(position, nameof(Position));
             Organization = Validation(organization, nameof(Organization));
             Address = address;

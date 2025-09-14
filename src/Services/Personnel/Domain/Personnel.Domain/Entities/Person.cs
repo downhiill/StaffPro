@@ -1,3 +1,4 @@
+using Ardalis.GuardClauses;
 using Personnel.Domain.Entities.PersonalData;
 
 namespace Personnel.Domain.Entities
@@ -66,6 +67,11 @@ namespace Personnel.Domain.Entities
         /// <param name="description">Описание пользователя.</param>
         public Person(PersonName name, Gender gender, Email email, Phone phone, DateTime dateOfBirth, string avatarUrl, string description)
         {
+            Guard.Against.Null(name, nameof(name));
+            Guard.Against.Null(email, nameof(email));
+            Guard.Against.Null(phone, nameof(phone));
+            Guard.Against.OutOfRange(dateOfBirth, nameof(dateOfBirth), DateTime.MinValue, DateTime.Now);
+            
             Name = name;
             Gender = gender;
             Email = email;

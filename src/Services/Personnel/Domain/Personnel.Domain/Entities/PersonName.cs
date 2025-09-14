@@ -1,3 +1,5 @@
+using Ardalis.GuardClauses;
+
 namespace Personnel.Domain.Entities
 {
     /// <summary>
@@ -31,6 +33,10 @@ namespace Personnel.Domain.Entities
         /// </exception>
         public PersonName(string firstName, string middleName, string lastName)
         {
+            Guard.Against.Null(firstName, nameof(firstName));
+            Guard.Against.Null(middleName, nameof(middleName));
+            Guard.Against.Null(lastName, nameof(lastName));
+            
             FirstName = Validate(firstName, nameof(FirstName));
             MiddleName = Validate(middleName, nameof(MiddleName));
             LastName = Validate(lastName, nameof(LastName));

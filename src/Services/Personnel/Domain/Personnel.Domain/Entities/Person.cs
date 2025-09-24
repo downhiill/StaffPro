@@ -1,5 +1,6 @@
 using Ardalis.GuardClauses;
 using Personnel.Domain.Entities.PersonalData;
+using Personnel.Domain.Validation;
 
 namespace Personnel.Domain.Entities
 {
@@ -26,12 +27,12 @@ namespace Personnel.Domain.Entities
         /// <summary>
         /// Электронная почта пользователя.
         /// </summary>
-        public Email Email { get; private set; }
+        public Email? Email { get; private set; }
 
         /// <summary>
         /// Телефон пользователя.
         /// </summary>
-        public Phone Phone { get; private set; }
+        public Phone? Phone { get; private set; }
 
         /// <summary>
         /// Дата рождения пользователя.
@@ -65,11 +66,9 @@ namespace Personnel.Domain.Entities
         /// <param name="dateOfBirth">Дата рождения.</param>
         /// <param name="avatarUrl">Ссылка на аватар.</param>
         /// <param name="description">Описание пользователя.</param>
-        public Person(PersonName name, Gender gender, Email email, Phone phone, DateTime dateOfBirth, string avatarUrl, string description)
+        public Person(PersonName name, Gender gender, Email? email, Phone? phone, DateTime dateOfBirth, string avatarUrl, string description)
         {
             Guard.Against.Null(name, nameof(name));
-            Guard.Against.Null(email, nameof(email));
-            Guard.Against.Null(phone, nameof(phone));
             Guard.Against.OutOfRange(dateOfBirth, nameof(dateOfBirth), DateTime.MinValue, DateTime.Now);
             
             Name = name;
@@ -87,6 +86,7 @@ namespace Personnel.Domain.Entities
         /// <param name="newName">Новое имя пользователя.</param>
         public void SetPersonName(PersonName newName)
         {
+            Guard.Against.Null(newName, nameof(newName));
             Name = newName;
         }
 
@@ -94,7 +94,7 @@ namespace Personnel.Domain.Entities
         /// Устанавливает новую электронную почту пользователя.
         /// </summary>
         /// <param name="newEmail">Новая электронная почта.</param>
-        public void SetEmail(Email newEmail)
+        public void SetEmail(Email? newEmail)
         {
             Email = newEmail;
         }
@@ -103,7 +103,7 @@ namespace Personnel.Domain.Entities
         /// Устанавливает новый телефон пользователя.
         /// </summary>
         /// <param name="newPhone">Новый телефон.</param>
-        public void SetPhone(Phone newPhone)
+        public void SetPhone(Phone? newPhone)
         {
             Phone = newPhone;
         }
@@ -114,6 +114,7 @@ namespace Personnel.Domain.Entities
         /// <param name="dateOfBirth">Дата рождения.</param>
         public void SetDateOfBirth(DateTime dateOfBirth)
         {
+            Guard.Against.OutOfRange(dateOfBirth, nameof(dateOfBirth), DateTime.MinValue, DateTime.Now);
             DateOfBirth = dateOfBirth;
         }
 
@@ -124,10 +125,7 @@ namespace Personnel.Domain.Entities
         /// <exception cref="ArgumentException">Выбрасывается, если формат изображения неверный.</exception>
         public void SetAvatar(string avatarUrl)
         {
-            if (!avatarUrl.EndsWith(".png") && !avatarUrl.EndsWith(".jpg"))
-                throw new ArgumentException("Изображение должно быть .png или .jpg");
-
-            AvatarUrl = avatarUrl;
+            AvatarUrl = DomainValidator.ValidateFormatAvatar(avatarUrl);
         }
 
         /// <summary>

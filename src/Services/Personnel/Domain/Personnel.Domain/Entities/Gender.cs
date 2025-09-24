@@ -14,10 +14,6 @@ namespace Personnel.Domain.Entities
         /// Женский.
         /// </summary>
         Female = 1,
-
-        /// <summary>
-        /// Специальное значение (например, тестовое или нестандартное).
-        /// </summary>
-        Brat = 777
+        
     }
 }

@@ -1,3 +1,5 @@
+using Personnel.Domain.Validation;
+
 namespace Personnel.Domain.Entities.PersonalData
 {
     /// <summary>
@@ -8,7 +10,7 @@ namespace Personnel.Domain.Entities.PersonalData
         /// <summary>
         /// Значение телефонного номера.
         /// </summary>
-        public string? Value { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// Создаёт новый экземпляр <see cref="Phone"/> с указанным номером.
@@ -19,14 +21,7 @@ namespace Personnel.Domain.Entities.PersonalData
         /// </exception>
         public Phone(string value)
         {
-            if (!value.StartsWith("77") && !value.StartsWith("777"))
-                throw new ArgumentException("Разрешены только номера ПМР");
-            if (value.Length != 8)
-                throw new ArgumentException("Номер должен быть формата 77хххххх или 777ххххх");
-            if (!value.All(char.IsDigit))
-                throw new ArgumentException("Номер должен состоять из цифр");
-
-            Value = value;
+            Value = DomainValidator.ValidatePhone(value);
         }
     }
 }

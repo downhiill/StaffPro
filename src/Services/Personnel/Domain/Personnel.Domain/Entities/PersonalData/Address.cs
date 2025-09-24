@@ -1,4 +1,5 @@
 using Ardalis.GuardClauses;
+using Personnel.Domain.Validation;
 
 namespace Personnel.Domain.Entities.PersonalData
 {
@@ -30,15 +31,8 @@ namespace Personnel.Domain.Entities.PersonalData
             Guard.Against.Null(country, nameof(country));
             Guard.Against.Null(city, nameof(city));
             
-            Country = Validation(country, nameof(country));
-            City = Validation(city, nameof(city));
-        }
-        
-        private string Validation(string value, string fieldName)
-        {
-            if (value.Length > 250)
-                throw new ArgumentException($"{fieldName} не может быть больше 250 символов", fieldName);
-            return value;
+            Country = DomainValidator.ValidateAddress(country, nameof(country));
+            City = DomainValidator.ValidateAddress(city, nameof(city));
         }
     }
 }

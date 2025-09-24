@@ -1,4 +1,5 @@
 using Ardalis.GuardClauses;
+using Personnel.Domain.Validation;
 
 namespace Personnel.Domain.Entities
 {
@@ -37,23 +38,10 @@ namespace Personnel.Domain.Entities
             Guard.Against.Null(middleName, nameof(middleName));
             Guard.Against.Null(lastName, nameof(lastName));
             
-            FirstName = Validate(firstName, nameof(FirstName));
-            MiddleName = Validate(middleName, nameof(MiddleName));
-            LastName = Validate(lastName, nameof(LastName));
+            FirstName = DomainValidator.ValidatePersonName(firstName, nameof(FirstName));
+            MiddleName = DomainValidator.ValidatePersonName(middleName, nameof(MiddleName));
+            LastName = DomainValidator.ValidatePersonName(lastName, nameof(LastName));
         }
         
-        private string Validate(string value, string fieldName)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException($"{fieldName} не может быть пустым");
-
-            if (value.Length < 2 | value.Length > 60)
-                throw new ArgumentException($"{fieldName} должно содержать от 2 до 60 символов");
-
-            if (!value.All(char.IsLetter))
-                throw new ArgumentException($"{fieldName} может содержать только буквы");
-
-            return value;
-        }
     }
 }

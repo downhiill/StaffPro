@@ -1,3 +1,5 @@
+using Personnel.Domain.Validation;
+
 namespace Personnel.Domain.Entities.PersonalData
 {
     /// <summary>
@@ -8,7 +10,7 @@ namespace Personnel.Domain.Entities.PersonalData
         /// <summary>
         /// Значение электронной почты.
         /// </summary>
-        public string? Value { get; private set; }
+        public string Value { get; private set; }
 
         /// <summary>
         /// Создает новую электронную почту с проверкой корректности.
@@ -19,12 +21,7 @@ namespace Personnel.Domain.Entities.PersonalData
         /// </exception>
         public Email(string value)
         {
-            if (value.Length > 255)
-                throw new ArgumentException($"Email не может быть больше 255 символов");
-            if (!value.Contains('@'))
-                throw new ArgumentException("Email должен содержать '@'");
-
-            Value = value;
+            Value = DomainValidator.ValidateEmail(value);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Ardalis.GuardClauses;
+using Personnel.Domain.Validation;
 
 namespace Personnel.Domain.Entities.PersonalData
 {
@@ -55,15 +56,17 @@ namespace Personnel.Domain.Entities.PersonalData
         /// Выбрасывается, если <paramref name="position"/> или <paramref name="organization"/> длиннее 250 символов,
         /// или если даты заданы некорректно.
         /// </exception>
-        public WorkExperience(string position, string organization, Address address, string description, DateTime startDate, DateTime endDate)
+        public WorkExperience(string position, string organization, Address address, string description,
+            DateTime startDate, DateTime endDate)
         {
             Guard.Against.Null(position, nameof(position));
             Guard.Against.Null(organization, nameof(organization));
             Guard.Against.Null(address, nameof(address));
-            
-            Position = Validation(position, nameof(Position));
-            Organization = Validation(organization, nameof(Organization));
+
+            Position = DomainValidator.ValidateWorkExperience(position, nameof(position));
+            Organization = DomainValidator.ValidateWorkExperience(organization, nameof(organization));
             Address = address;
+            Description = description;
             SetDates(startDate, endDate);
         }
 
@@ -71,19 +74,31 @@ namespace Personnel.Domain.Entities.PersonalData
         /// Устанавливает должность.
         /// </summary>
         /// <param name="position">Должность. Не может быть длиннее 250 символов.</param>
-        public void SetPosition(string position) => Position = Validation(position, nameof(Position));
+        public void SetPosition(string position)
+        {
+            Guard.Against.Null(position, nameof(position));
+            Position = DomainValidator.ValidateWorkExperience(position, nameof(position));
+        }
 
         /// <summary>
         /// Устанавливает организацию.
         /// </summary>
         /// <param name="organization">Организация. Не может быть длиннее 250 символов.</param>
-        public void SetOrganization(string organization) => Organization = Validation(organization, nameof(Organization));
+        public void SetOrganization(string organization)
+        {
+            Guard.Against.Null(organization, nameof(organization));
+            Organization = DomainValidator.ValidateWorkExperience(organization, nameof(organization));
+        }
 
         /// <summary>
         /// Устанавливает адрес организации.
         /// </summary>
         /// <param name="address">Адрес организации.</param>
-        public void SetAddress(Address address) => Address = address;
+        public void SetAddress(Address address)
+        {
+            Guard.Against.Null(address, nameof(address));
+            Address = address;
+        }
 
         /// <summary>
         /// Устанавливает описание опыта работы.
@@ -99,21 +114,7 @@ namespace Personnel.Domain.Entities.PersonalData
         /// <exception cref="ArgumentException">Выбрасывается при некорректных датах.</exception>
         public void SetDates(DateTime startDate, DateTime endDate)
         {
-            if (startDate > DateTime.Now)
-                throw new ArgumentException("StartDate не может быть в будущем");
-            if (endDate < startDate)
-                throw new ArgumentException("EndDate не может быть раньше StartDate");
-
-            StartDate = startDate;
-            EndDate = endDate;
-        }
-        
-        private string Validation(string value, string fieldName)
-        {
-            if (value.Length > 250)
-                throw new ArgumentException($"{fieldName} не может быть больше 250 символов");
-
-            return value;
+            (StartDate, EndDate) = DomainValidator.ValidateWorkExperienceDate(startDate, endDate);
         }
     }
 }
